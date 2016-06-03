@@ -28,6 +28,8 @@ describe 'stns::client class' do
         ssl_verify         => true,
         handle_nsswitch    => true,
         handle_sshd_config => true,
+        handle_sudo_config => true,
+        sudoers_name       => 'example_user',
       }
     EOS
   }
@@ -72,5 +74,9 @@ describe 'stns::client class' do
     its(:content) { should match /^\s*PubkeyAuthentication\s+yes$/ }
     its(:content) { should match %r|^\s*AuthorizedKeysCommand\s+/usr/local/bin/stns-key-wrapper$| }
     its(:content) { should match /^\s*AuthorizedKeysCommand(User|RunAs)\s+root$/ }
+  end
+
+  describe file('/etc/pam.d/sudo') do
+    its(:content) { should match /^#%PAM-1.0\nauth       sufficient   libpam_stns.so sudo example_user$/ }
   end
 end
