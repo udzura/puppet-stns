@@ -86,7 +86,7 @@ class stns::client (
         'set 01/argument[1] sudo',
         "set 01/argument[2] ${sudoers_name}",
       ],
-      onlyif => [
+      onlyif  => [
         "values *[type = 'auth']/module not_include libpam_stns.so",
         "match *[module = 'libpam_stns.so']/argument size < 2",
         "match *[module = 'libpam_stns.so']/argument != ['sudo', ${sudoers_name}]",
