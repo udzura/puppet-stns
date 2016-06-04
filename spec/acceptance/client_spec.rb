@@ -77,6 +77,6 @@ describe 'stns::client class' do
   end
 
   describe file('/etc/pam.d/sudo') do
-    its(:content) { should match /^#%PAM-1.0\nauth       sufficient   libpam_stns.so sudo example_user$/ }
+    its(:content) { should match /^#%PAM-1.0\nauth\s+sufficient\s+libpam_stns.so\s+sudo\s+example_user$/ }
   end
 end
